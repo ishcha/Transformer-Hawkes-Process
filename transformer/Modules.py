@@ -13,7 +13,7 @@ class ScaledDotProductAttention(nn.Module):
         self.dropout = nn.Dropout(attn_dropout)
 
     def forward(self, q, k, v, mask=None):
-        attn = torch.matmul(q / self.temperature, k.transpose(2, 3)) # While k is (batch_size, heads, number of event points in a sequence, M_k) dimensional, transpose the last 2 dimensions
+        attn = torch.matmul(q / self.temperature, k.transpose(2, 3)) # While k is (batch_size, heads, length of key, M_k) dimensional, transpose the last 2 dimensions
 
         if mask is not None:
             attn = attn.masked_fill(mask, -1e9) # mask with -infty values on future value correlations
